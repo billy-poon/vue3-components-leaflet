@@ -25,12 +25,14 @@ const esbuildConfig = defineConfig({
         replace({
             preventAssignment: true,
             values: {
-                '__component_name': (file) => {
+                '__component_name__': (file) => {
                     const extname = path.extname(file)
                     const basename = path.basename(file, extname)
-                    return basename === 'index'
+                    const result = basename === 'index'
                         ? path.basename(path.dirname(file))
                         : basename
+
+                    return JSON.stringify(result)
                 }
             }
         }),
