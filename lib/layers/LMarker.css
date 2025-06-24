@@ -1,0 +1,9 @@
+.l-marker-icon.leaflet-marker-icon {
+    position: relative;
+}
+
+.l-marker-icon.leaflet-marker-icon>.l-marker-icon-content {
+    position: absolute;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+}

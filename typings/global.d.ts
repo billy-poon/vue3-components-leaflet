@@ -3,3 +3,8 @@ interface Window {
 }
 
 declare const __component_name__: string
+
+declare module "*.css" {
+    const classes: unknown
+    export default classes
+}

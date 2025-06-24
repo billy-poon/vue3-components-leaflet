@@ -1,7 +1,9 @@
 {
-    "compilerOptions": {},
-    "include": [
-        // "env.d.ts",
-        "lib/**/*",
-    ]
+    "extends": "./tsconfig.types.json",
+    "compilerOptions": {
+        "tsBuildInfoFile": "node_modules/.tmp/tsconfig.esbuild.tsbuildinfo",
+
+        "sourceMap": true,
+        "emitDeclarationOnly": false,
+    },
 }
