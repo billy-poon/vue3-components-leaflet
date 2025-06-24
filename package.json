@@ -10,6 +10,15 @@
     "README.md",
     "dist"
   ],
+  "keywords": ["vue3", "leaflet"],
+  "author": "Billy Poon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/billy-poon/vue3-components-leaflet"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p clean type-check \"build-only {@}\" --",
