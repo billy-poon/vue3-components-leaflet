@@ -23,7 +23,7 @@ export default defineConfig({
                 const extname = path.extname(file)
                 const basename = path.basename(file, extname)
                 const result = basename === 'index'
-                    ? path.basename
+                    ? path.basename(path.dirname(file))
                     : basename
 
                 return JSON.stringify(result)
