@@ -24,6 +24,8 @@ watchEffect((onCleanup) => {
             L.marker(center)
         )
 
+    window.$map = map
+
     onCleanup(() => {
         map.remove()
     })
