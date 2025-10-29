@@ -1,52 +1,51 @@
-import { defineComponent, toRef, watchEffect, type PropType } from 'vue'
+import { defineComponent, reactive, shallowRef, type ShallowRef } from 'vue'
 import { useEventAttrs } from './hooks/eventAttrs'
 import { setupMapContext } from './hooks/mapContext'
 import { _L } from './leaflet'
 import './LMap.scss'
-import type { Fn } from './types'
+import { defineLifecycleEmits } from './utils/emits'
+import { defineObjectProps, setupObject } from './utils/object'
 
 export type LMapContext = {
     el: HTMLElement
     map: L.Map
 }
 
-
 export const LMap = defineComponent({
     inheritAttrs: false,
-    props: {
-        options: Object as PropType<L.MapOptions>,
-        initialOptions: Object as PropType<L.MapOptions>,
-    },
-    emits: {
-        ready: null as unknown as Fn<void, [ctx: LMapContext]>,
-        remove: null as unknown as Fn<void, [ctx: LMapContext]>,
-    },
+    props: defineObjectProps<L.MapOptions>(),
+    emits: defineLifecycleEmits<LMapContext>(),
     setup(props, { emit, slots }) {
-        const state = setupMapContext()
+        const el = shallowRef(null) as ShallowRef<HTMLElement | null>
+        const { obj: map, watchValueEffect } = setupObject(
+            (options) => {
+                const val = el.value
+                return val != null
+                    ? _L.map(val, options)
+                    : null
+            },
+            props
+        )
+
+        const state = reactive({ el, map })
+        setupMapContext(state as any)
 
         const { attrs, eventAttrs } = useEventAttrs()
+        watchValueEffect((map) => {
+            const ctx = { el: el.value!, map }
 
-        const { initialOptions } = props
-        watchEffect((onCleanup) => {
-            const { el } = state
-            if (el == null) return;
-
-            const map = _L.map(el, props.options ?? initialOptions)
-
-            state.map = map
             map.on(eventAttrs)
-            emit('ready', { el, map })
-            onCleanup(() => {
-                state.map = null
-                map.off(eventAttrs).remove()
-                emit('remove', { el, map })
-            })
+            emit('ready', ctx)
+            return () => {
+                map.off(eventAttrs)
+                emit('remove', ctx)
+            }
         })
 
-        const refEl = toRef(state, 'el')
-
         return () => (
-            <div ref={refEl} { ...{ class: 'l-map', ...attrs } }>
+            // `{ class: 'l-map', ...attrs }` makes
+            // the `class` attribute over-writable
+            <div ref={el} { ...{ class: 'l-map', ...attrs } }>
                 { state.map != null ? slots.default?.() : void 0 }
             </div>
         )

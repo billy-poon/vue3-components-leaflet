@@ -1,17 +1,10 @@
-import { inject, provide, shallowReactive, shallowReadonly, type InjectionKey } from 'vue'
+import { inject, provide, shallowReadonly, type InjectionKey, type ShallowReactive } from 'vue'
 import type { LMapContext } from '../LMap'
 
 const key: InjectionKey<LMapContext> = Symbol('hooks/mapContext')
 
-export function setupMapContext() {
-    const state = shallowReactive({
-        el: null as HTMLElement | null,
-        map: null as L.Map | null
-    })
-
-    provide(key, shallowReadonly(state) as LMapContext)
-
-    return state
+export function setupMapContext(ctx: ShallowReactive<LMapContext>) {
+    provide(key, shallowReadonly(ctx))
 }
 
 export function useMapContext(): LMapContext
