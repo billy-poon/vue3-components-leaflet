@@ -12,6 +12,7 @@ export type LMapContext = {
 }
 
 export const LMap = defineComponent({
+    name: __component_name__,
     inheritAttrs: false,
     props: defineObjectProps<L.MapOptions>(),
     emits: defineLifecycleEmits<LMapContext>(),

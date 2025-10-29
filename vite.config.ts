@@ -1,5 +1,7 @@
+import replace from '@rollup/plugin-replace'
 import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
+import path from 'path'
 import { defineConfig } from 'vite'
 import external from 'vite-plugin-external'
 
@@ -11,8 +13,20 @@ export default defineConfig({
         external({
             externals: {
                 'leaflet': 'L',
-                // cSpell: ignore markercluster
                 'leaflet.markercluster': 'L',
+            }
+        }),
+        replace({
+            preventAssignment: true,
+
+            '__component_name__'(file) {
+                const extname = path.extname(file)
+                const basename = path.basename(file, extname)
+                const result = basename === 'index'
+                    ? path.basename
+                    : basename
+
+                return JSON.stringify(result)
             }
         })
     ],
