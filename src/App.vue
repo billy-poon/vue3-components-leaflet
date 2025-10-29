@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, watchEffect } from 'vue'
-import { _L } from '../lib'
+import { _L, LMap, type LMapState } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -10,31 +9,22 @@ const mapOptions: L.MapOptions = {
     attributionControl: false,
 }
 
-const el = shallowRef<HTMLElement>()
-watchEffect((onCleanup) => {
-    const val = el.value
-    if (val == null) return;
-
-    const map = _L.map(val, mapOptions)
-        .addLayer(
-            // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-            _L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-        )
-        .addLayer(
-            _L.marker(center)
-        )
+function handleReady(state: LMapState) {
+    const { map } = state
+    map.addLayer(
+        // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
+        _L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+    ).addLayer(
+        _L.marker(center)
+    )
 
     window.$map = map
-
-    onCleanup(() => {
-        map.remove()
-    })
-})
+}
 
 </script>
 
 <template>
-  <div id="map" ref="el" />
+  <LMap id="map" :options="mapOptions" @ready="handleReady" />
 </template>
 
 <style scoped>
