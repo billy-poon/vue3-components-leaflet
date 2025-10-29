@@ -1,19 +1,24 @@
 <script setup lang="ts">
-import { _L, LMap, type LMapContext } from '../lib'
+import { _L, LMap, LTileLayer, type LMapContext } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
     center,
     zoom: 13,
     maxZoom: 18,
-    attributionControl: false,
+    // attributionControl: false,
+}
+
+const tileLayer = {
+    // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    options: {
+        attribution: '&copyright; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+    } satisfies L.TileLayerOptions
 }
 
 function handleReady({ map }: LMapContext) {
     map.addLayer(
-        // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-        _L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-    ).addLayer(
         _L.marker(center)
     )
 
@@ -29,7 +34,9 @@ function handleMapClick(e: L.LeafletMouseEvent) {
 </script>
 
 <template>
-  <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick" />
+    <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick">
+        <LTileLayer v-bind="tileLayer" />
+    </LMap>
 </template>
 
 <style lang="scss">
