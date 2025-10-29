@@ -1,5 +1,6 @@
 import { Fragment, h, render, type ExtractPropTypes, type PropType, type SetupContext, type SlotsType } from 'vue'
 import { useEventAttrs } from '../hooks/eventAttrs'
+import { useLayersControlContext } from '../hooks/layersControlContext'
 import { useMapContext } from '../hooks/mapContext'
 import { _L } from '../leaflet'
 import type { Constructor, Factory } from '../types'
@@ -84,8 +85,16 @@ export function setupLayer<
     })
 
     const { map } = useMapContext()
+    const ctrlCtx = useLayersControlContext()
     watchValueEffect((val) => {
-        // TODO: add to `Layers` control or `LayerGroup`
+        // TODO: add to `LayerGroup`
+        if (ctrlCtx != null ) {
+            const { label } = props
+            if (label != null) {
+                ctrlCtx.addLayer(val, label)
+                return () => ctrlCtx.removeLayer(val)
+            }
+        }
         val.addTo(map)
     })
 
