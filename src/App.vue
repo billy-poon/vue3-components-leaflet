@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { _L, LMap, type LMapState } from '../lib'
+import { _L, LMap, type LMapContext } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -9,8 +9,7 @@ const mapOptions: L.MapOptions = {
     attributionControl: false,
 }
 
-function handleReady(state: LMapState) {
-    const { map } = state
+function handleReady({ map }: LMapContext) {
     map.addLayer(
         // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
         _L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
@@ -33,9 +32,5 @@ function handleMapClick(e: L.LeafletMouseEvent) {
   <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick" />
 </template>
 
-<style scoped>
-#map {
-    width: 100%;
-    height: 100%;
-}
+<style lang="scss">
 </style>
