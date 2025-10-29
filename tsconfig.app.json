@@ -16,6 +16,9 @@
     "include": [
         "typings/**/*.d.ts",
 
+        "lib/**/*.ts",
+        "lib/**/*.vue",
+
         "src/**/*.ts",
         "src/**/*.tsx",
         "src/**/*.vue"
