@@ -1,30 +1,43 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import L from 'leaflet'
+import { shallowRef, watchEffect } from 'vue'
+
+const center: L.LatLngExpression = [39.907337, 116.391263]
+const mapOptions: L.MapOptions = {
+    center,
+    zoom: 13,
+    maxZoom: 18,
+    attributionControl: false,
+}
+
+const el = shallowRef<HTMLElement>()
+watchEffect((onCleanup) => {
+    const val = el.value
+    if (val == null) return;
+
+    const map = L.map(val, mapOptions)
+        .addLayer(
+            // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+        )
+        .addLayer(
+            L.marker(center)
+        )
+
+    onCleanup(() => {
+        map.remove()
+    })
+})
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div id="map" ref="el" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+#map {
+    width: 100%;
+    height: 100%;
 }
 </style>
