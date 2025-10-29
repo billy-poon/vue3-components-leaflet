@@ -13,7 +13,7 @@ const tileLayer = {
     // https://wiki.openstreetmap.org/wiki/Raster_tile_providers
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     options: {
-        attribution: '&copyright; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+        attribution: '&copy;<a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
     } satisfies L.TileLayerOptions
 }
 
