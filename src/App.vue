@@ -21,10 +21,16 @@ function handleReady(state: LMapState) {
     window.$map = map
 }
 
+function handleMapClick(e: L.LeafletMouseEvent) {
+    const { lat, lng } = e.latlng
+    const latLng = [lat, lng].map(x => x.toFixed(6)).join(', ')
+    console.log('click:', `[${latLng}]`)
+}
+
 </script>
 
 <template>
-  <LMap id="map" :options="mapOptions" @ready="handleReady" />
+  <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick" />
 </template>
 
 <style scoped>

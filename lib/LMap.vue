@@ -7,7 +7,8 @@ export type LMapState = {
 </script>
 
 <script lang="ts" setup>
-import { shallowReactive, toRef, useAttrs, watchEffect, type PropType } from 'vue';
+import { shallowReactive, toRef, watchEffect, type PropType } from 'vue';
+import { useEventAttrs } from './hooks/eventAttrs';
 import { _L } from './leaflet';
 
 defineOptions({
@@ -28,7 +29,7 @@ const state = shallowReactive({
     map: null as L.Map | null
 })
 
-const refEl = toRef(state, 'el')
+const { attrs, eventAttrs } = useEventAttrs()
 
 const { initialOptions } = props
 watchEffect((onCleanup) => {
@@ -38,17 +39,16 @@ watchEffect((onCleanup) => {
     const map = _L.map(el, props.options ?? initialOptions)
 
     state.map = map
+    map.on(eventAttrs)
     emit('ready', { el, map })
     onCleanup(() => {
-        map.remove()
         state.map = null
+        map.off(eventAttrs).remove()
         emit('remove', { el, map })
     })
 })
 
-
-const attrs = useAttrs()
-
+const refEl = toRef(state, 'el')
 </script>
 
 <template>
