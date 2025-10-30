@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as LL from '../lib'
+import LMouseLocation from '../lib/tools/LMouseLocation'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -72,7 +73,9 @@ function handleMapClick(e: L.LeafletMouseEvent) {
         <LL.LControlZoom />
         <LL.LControlScale />
         <LL.LControlAttribution />
-        <LL.LControl>Hello, World!</LL.LControl>
+        <LL.LControl class="l-control">
+            <LMouseLocation />
+        </LL.LControl>
 
         <LL.LControlLayers>
             <template #baseLayers>
@@ -94,18 +97,18 @@ function handleMapClick(e: L.LeafletMouseEvent) {
                     🏞️
                 </LL.LMarker>
             </LL.LMarkerCluster>
-
-            <LL.LMarker
-                :latLng="center"
-                :initialOptions="{ title: 'Beijing', draggable: true }"
-                style="color: #f00"
-                >
-                ❤
-                <template #popup>
-                    I 💗 Beijing!
-                </template>
-            </LL.LMarker>
         </LL.LControlLayers>
+
+        <LL.LMarker
+            :latLng="center"
+            :initialOptions="{ title: 'Beijing', draggable: true }"
+            style="color: #f00"
+            >
+            ❤
+            <template #popup>
+                I 💗 Beijing!
+            </template>
+        </LL.LMarker>
     </LL.LMap>
 </template>
 

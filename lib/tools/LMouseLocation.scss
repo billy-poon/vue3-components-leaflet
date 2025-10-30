@@ -1,0 +1,8 @@
+.l-mouse-location {
+    padding: var(--l-control-padding);
+    font-family: ui-monospace, Menlo, Monaco, "Source Code Pro", Consolas, monospace;
+
+    &--freezed {
+        background-color: #ddd;
+    }
+}
