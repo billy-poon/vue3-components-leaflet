@@ -1,0 +1,15 @@
+.l-control.leaflet-control a.l-draw-polyline-icon {
+    min-width: var(--l-control-prefer-size);
+    line-height: var(--l-control-prefer-size);
+
+    box-sizing: border-box;
+
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+    &--active {
+        background-color: #ddd;
+    }
+}

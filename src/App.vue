@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as LL from '../lib'
+import LDrawPolyline from '../lib/tools/LDrawPolyline'
 import LMouseLocation from '../lib/tools/LMouseLocation'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
@@ -60,10 +61,17 @@ function handleReady({ map }: LL.LMapContext) {
     window.$map = map
 }
 
+function formatLatLng(val: L.LatLng) {
+    const { lat, lng } = val
+    return [lat, lng].map(x => x.toFixed(6)).join(', ')
+}
+
 function handleMapClick(e: L.LeafletMouseEvent) {
-    const { lat, lng } = e.latlng
-    const latLng = [lat, lng].map(x => x.toFixed(6)).join(', ')
-    console.log('click:', `[${latLng}]`)
+    console.log('click:', `[${formatLatLng(e.latlng)}]`)
+}
+
+function handleCommit(points: L.LatLng[]) {
+    console.log('polyline:[\n' + points.map(x => `  [${formatLatLng(x)}]`).join(',\n') + '\n]')
 }
 
 </script>
@@ -73,6 +81,15 @@ function handleMapClick(e: L.LeafletMouseEvent) {
         <LL.LControlZoom />
         <LL.LControlScale />
         <LL.LControlAttribution />
+
+        <LL.LControl class="l-control" position="topleft">
+            <LDrawPolyline @commit="handleCommit" preview polygon />
+                <!-- <template #visual="points">
+                    <LL.LPolygon :latLngs="points" />
+                </template>
+            </LDrawPolyline> -->
+        </LL.LControl>
+
         <LL.LControl class="l-control">
             <LMouseLocation />
         </LL.LControl>
