@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LControlAttribution, LControlLayers, LControlScale, LControlZoom, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
+import { LControl, LControlAttribution, LControlLayers, LControlScale, LControlZoom, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -35,6 +35,7 @@ function handleMapClick(e: L.LeafletMouseEvent) {
         <LControlZoom />
         <LControlScale />
         <LControlAttribution />
+        <LControl>Hello, World!</LControl>
 
         <LControlLayers>
             <template #baseLayers>

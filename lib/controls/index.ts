@@ -1,3 +1,4 @@
+export * from './LControl'
 export * from './LControlAttribution'
 export * from './LControlLayers'
 export * from './LControlScale'
