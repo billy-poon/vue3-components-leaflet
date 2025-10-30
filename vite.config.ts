@@ -1,6 +1,5 @@
 import replace from '@rollup/plugin-replace'
 import vue from '@vitejs/plugin-vue'
-import jsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 import { defineConfig } from 'vite'
 import external from 'vite-plugin-external'
@@ -9,7 +8,6 @@ import external from 'vite-plugin-external'
 export default defineConfig({
     plugins: [
         vue(),
-        jsx() as any,
         external({
             externals: {
                 'leaflet': 'L',
