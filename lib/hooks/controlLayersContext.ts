@@ -1,19 +1,19 @@
 import { inject, nextTick, onUnmounted, provide, type InjectionKey, type Ref } from 'vue'
 import { useMapContext } from './mapContext'
 
-export type LayersControlContext = {
+export type ControlLayersContext = {
     control: L.Control.Layers
     addLayer(layer: L.Layer, label: string): void
     removeLayer(layer: L.Layer): void
 }
 
-export type LayersControlGroupType = 'baseLayers' | 'overlays'
+export type ControlLayersGroupType = 'baseLayers' | 'overlays'
 
-const key: InjectionKey<LayersControlContext> = Symbol('hooks/layersControlContext')
+const key: InjectionKey<ControlLayersContext> = Symbol('hooks/controlLayersContext')
 
-export function setupLayersControlContext(
+export function setupControlLayersContext(
     control: Readonly<Ref<L.Control.Layers>>,
-    group: LayersControlGroupType
+    group: ControlLayersGroupType
 ) {
     const { map } = useMapContext()
 
@@ -22,7 +22,7 @@ export function setupLayersControlContext(
         lastBaseLayer = undefined
     })
 
-    const ctx: LayersControlContext = {
+    const ctx: ControlLayersContext = {
         get control() {
             return control.value
         },
@@ -48,7 +48,7 @@ export function setupLayersControlContext(
     return ctx
 }
 
-export function useLayersControlContext() {
+export function useControlLayersContext() {
     const result = inject(key, null)
     return result
 }

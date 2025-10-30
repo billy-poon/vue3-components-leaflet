@@ -1,7 +1,7 @@
 import { Fragment, h, render, type ExtractPropTypes, type PropType, type SetupContext, type SlotsType } from 'vue'
+import { useControlLayersContext } from '../hooks/controlLayersContext'
 import { useEventAttrs } from '../hooks/eventAttrs'
 import { useLayersGroupContext } from '../hooks/layerGroupContext'
-import { useLayersControlContext } from '../hooks/layersControlContext'
 import { useMapContext } from '../hooks/mapContext'
 import { _L } from '../leaflet'
 import type { Constructor, Factory } from '../types'
@@ -86,7 +86,7 @@ export function setupLayer<
     })
 
     const { map } = useMapContext()
-    const ctrlCtx = useLayersControlContext()
+    const ctrlCtx = useControlLayersContext()
     const groupCtx = useLayersGroupContext()
 
     watchValueEffect((val) => {

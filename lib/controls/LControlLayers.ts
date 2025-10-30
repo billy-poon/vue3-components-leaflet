@@ -1,11 +1,11 @@
 import { defineComponent, Fragment, h, toRef, type PropType, type SlotsType } from 'vue'
-import { setupLayersControlContext, type LayersControlGroupType } from '../hooks/layersControlContext'
+import { setupControlLayersContext, type ControlLayersGroupType } from '../hooks/controlLayersContext'
 import { _L } from '../leaflet'
 import { defineControlProps, setupControl } from '../utils/control'
 
 const name = __component_name__
 
-function defineGroupComponent(group: LayersControlGroupType) {
+function defineGroupComponent(group: ControlLayersGroupType) {
     return defineComponent({
         name: `${name}#${group}`,
         props: {
@@ -16,7 +16,7 @@ function defineGroupComponent(group: LayersControlGroupType) {
         },
         setup(props, { slots }) {
             const ctrl = toRef(props, 'control')
-            setupLayersControlContext(ctrl, group)
+            setupControlLayersContext(ctrl, group)
 
             return () => slots.default?.()
         }
