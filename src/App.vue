@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LControl, LControlAttribution, LControlLayers, LControlScale, LControlZoom, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
+import * as LL from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -18,7 +18,7 @@ const tileLayer = {
     } satisfies L.TileLayerOptions
 }
 
-function handleReady({ map }: LMapContext) {
+function handleReady({ map }: LL.LMapContext) {
     window.$map = map
 }
 
@@ -31,26 +31,26 @@ function handleMapClick(e: L.LeafletMouseEvent) {
 </script>
 
 <template>
-    <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick">
-        <LControlZoom />
-        <LControlScale />
-        <LControlAttribution />
-        <LControl>Hello, World!</LControl>
+    <LL.LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick">
+        <LL.LControlZoom />
+        <LL.LControlScale />
+        <LL.LControlAttribution />
+        <LL.LControl>Hello, World!</LL.LControl>
 
-        <LControlLayers>
+        <LL.LControlLayers>
             <template #baseLayers>
-                <LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
+                <LL.LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
             </template>
-            <LLayerGroup label="My Favorites">
-                <LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" style="color: #f00">
+            <LL.LLayerGroup label="My Favorites">
+                <LL.LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" style="color: #f00">
                     ❤
                     <template #popup>
-                        I 💖 Beijing!
+                        I 💗 Beijing!
                     </template>
-                </LMarker>
-            </LLayerGroup>
-        </LControlLayers>
-    </LMap>
+                </LL.LMarker>
+            </LL.LLayerGroup>
+        </LL.LControlLayers>
+    </LL.LMap>
 </template>
 
 <style lang="scss">
