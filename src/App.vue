@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { LControlLayers, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
+import { LControlAttribution, LControlLayers, LControlScale, LControlZoom, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
     center,
     zoom: 13,
     maxZoom: 18,
-    // attributionControl: false,
+    zoomControl: false,
+    attributionControl: false,
 }
 
 const tileLayer = {
@@ -31,6 +32,10 @@ function handleMapClick(e: L.LeafletMouseEvent) {
 
 <template>
     <LMap id="map" :options="mapOptions" @ready="handleReady" @click="handleMapClick">
+        <LControlZoom />
+        <LControlScale />
+        <LControlAttribution />
+
         <LControlLayers>
             <template #baseLayers>
                 <LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
