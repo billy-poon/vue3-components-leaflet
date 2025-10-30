@@ -18,6 +18,15 @@ const tileLayer = {
     } satisfies L.TileLayerOptions
 }
 
+const tileLayerWMS = {
+    url: 'https://ows.terrestris.de/osm/service?',
+    options: {
+        layers: 'OSM-WMS',
+        attribution: '&copy; <a href="https://www.terrestris.de/de/openstreetmap-wms/">terrestris</a>',
+        // crs: LL._L.CRS.EPSG3857
+    } satisfies L.WMSOptions
+}
+
 function handleReady({ map }: LL.LMapContext) {
     window.$map = map
 }
@@ -39,7 +48,8 @@ function handleMapClick(e: L.LeafletMouseEvent) {
 
         <LL.LControlLayers>
             <template #baseLayers>
-                <LL.LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
+                <LL.LTileLayer.WMS label="OpenStreetMap#wms" v-bind="tileLayerWMS" />
+                <LL.LTileLayer label="OpenStreetMap#tile" v-bind="tileLayer" />
             </template>
             <LL.LLayerGroup label="My Favorites">
                 <LL.LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" style="color: #f00">

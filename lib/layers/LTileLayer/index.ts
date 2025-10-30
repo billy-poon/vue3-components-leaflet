@@ -1,8 +1,11 @@
 import { defineComponent, watch } from 'vue'
 import { _L } from '../../leaflet'
 import { defineLayerEmits, defineLayerProps, defineLayerSlots, setupLayer } from '../../utils/layer'
+import { LTileLayerWMS } from './WMS'
 
-export const LTileLayer = defineComponent({
+export { LTileLayerWMS }
+
+const _LTileLayer = defineComponent({
     name: __component_name__,
     props: {
         url: {
@@ -28,3 +31,10 @@ export const LTileLayer = defineComponent({
         return () => void 0
     }
 })
+
+const LTileLayer = _LTileLayer as typeof _LTileLayer & {
+    WMS: typeof LTileLayerWMS
+}
+LTileLayer.WMS = LTileLayerWMS
+
+export { LTileLayer }
