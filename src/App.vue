@@ -36,7 +36,12 @@ function handleMapClick(e: L.LeafletMouseEvent) {
                 <LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
             </template>
             <LLayerGroup label="My Favorites">
-                <LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" />
+                <LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" style="color: #f00">
+                    ❤
+                    <template #popup>
+                        I 💖 Beijing!
+                    </template>
+                </LMarker>
             </LLayerGroup>
         </LControlLayers>
     </LMap>
