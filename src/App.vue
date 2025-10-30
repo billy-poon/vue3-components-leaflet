@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LControlLayers, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
+import { LControlLayers, LLayerGroup, LMap, LMarker, LTileLayer, type LMapContext } from '../lib'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -35,7 +35,9 @@ function handleMapClick(e: L.LeafletMouseEvent) {
             <template #baseLayers>
                 <LTileLayer label="OpenStreetMap" v-bind="tileLayer" />
             </template>
-            <LMarker label="Beijing" :latLng="center" />
+            <LLayerGroup label="My Favorites">
+                <LMarker :latLng="center" :initialOptions="{ title: 'Beijing' }" />
+            </LLayerGroup>
         </LControlLayers>
     </LMap>
 </template>
