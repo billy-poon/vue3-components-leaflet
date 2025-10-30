@@ -1,4 +1,4 @@
-import { defineComponent, reactive, shallowRef, type ShallowRef } from 'vue'
+import { defineComponent, h, reactive, shallowRef, type ShallowRef, type SlotsType } from 'vue'
 import { useEventAttrs } from './hooks/eventAttrs'
 import { setupMapContext } from './hooks/mapContext'
 import { _L } from './leaflet'
@@ -16,6 +16,9 @@ export const LMap = defineComponent({
     inheritAttrs: false,
     props: defineObjectProps<L.MapOptions>(),
     emits: defineLifecycleEmits<LMapContext>(),
+    slots: {} as SlotsType<{
+        default?: (map: L.Map) => any
+    }>,
     setup(props, { emit, slots }) {
         const el = shallowRef(null) as ShallowRef<HTMLElement | null>
         const { obj: map, watchValueEffect } = setupObject(
@@ -43,12 +46,15 @@ export const LMap = defineComponent({
             }
         })
 
-        return () => (
-            // `{ class: 'l-map', ...attrs }` makes
-            // the `class` attribute over-writable
-            <div ref={el} { ...{ class: 'l-map', ...attrs } }>
-                { state.map != null ? slots.default?.() : void 0 }
-            </div>
+        return () => h('div',
+            {
+                class: 'l-map',
+                ...attrs,
+                ref: el,
+            },
+            map.value != null
+                ? slots.default?.(map.value)
+                : void 0
         )
     }
 })
