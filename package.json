@@ -1,8 +1,28 @@
 {
     "name": "vue3-components-leaflet",
-    "private": true,
-    "version": "0.0.0",
+    "version": "0.1.0",
     "type": "module",
+    "main": "dist/vue3-leaflet.js",
+    "module": "dist/vue3-leaflet.mjs",
+    "types": "dist/index.d.ts",
+    "files": [
+        "README.md",
+        "dist",
+        "!dist/rollup.config.*"
+    ],
+    "keywords": [
+        "vue3",
+        "leaflet"
+    ],
+    "author": "Billy Poon",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/billy-poon/vue3-components-leaflet"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org"
+    },
+
     "scripts": {
         "dev": "vite",
         "build": "run-s clean build:dts build:lib",

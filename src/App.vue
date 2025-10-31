@@ -23,7 +23,6 @@ const tileLayerWMS = {
     options: {
         layers: 'OSM-WMS',
         attribution: '&copy; <a href="https://www.terrestris.de/de/openstreetmap-wms/">terrestris</a>',
-        // crs: LL._L.CRS.EPSG3857
     } satisfies L.WMSOptions
 }
 
