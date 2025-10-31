@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import * as LL from '../lib'
-import LDrawPolyline from '../lib/tools/LDrawPolyline'
-import LMouseLocation from '../lib/tools/LMouseLocation'
 
 const center: L.LatLngExpression = [39.907337, 116.391263]
 const mapOptions: L.MapOptions = {
@@ -83,15 +81,11 @@ function handleCommit(points: L.LatLng[]) {
         <LL.LControlAttribution />
 
         <LL.LControl class="l-control" position="topleft">
-            <LDrawPolyline @commit="handleCommit" preview polygon />
-                <!-- <template #visual="points">
-                    <LL.LPolygon :latLngs="points" />
-                </template>
-            </LDrawPolyline> -->
+            <LL.LDrawPolyline @commit="handleCommit" preview polygon />
         </LL.LControl>
 
         <LL.LControl class="l-control">
-            <LMouseLocation />
+            <LL.LMouseLocation />
         </LL.LControl>
 
         <LL.LControlLayers>

@@ -10,7 +10,7 @@ type LMouseLocationState = {
     location: L.LatLng | null
 }
 
-const LMouseLocation = defineComponent({
+export const LMouseLocation = defineComponent({
     name: __component_name__,
     props: {
         format: {
@@ -111,5 +111,3 @@ const LMouseLocation = defineComponent({
             )
     }
 })
-
-export default LMouseLocation

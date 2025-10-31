@@ -11,7 +11,7 @@ type LDrawPolylineState = {
     previewPoint: L.LatLng | null
 }
 
-const LDrawPolyline = defineComponent({
+export const LDrawPolyline = defineComponent({
     name: __component_name__,
     props: {
         cursor: {
@@ -190,5 +190,3 @@ const LDrawPolyline = defineComponent({
         ])
     }
 })
-
-export default LDrawPolyline
