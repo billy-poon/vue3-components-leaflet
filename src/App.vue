@@ -83,7 +83,7 @@ function handleCommit(points: L.LatLng[]) {
         </LL.LControl>
 
         <LL.LControl class="l-control">
-            <LL.LMouseLocation />
+            <LL.LMouseLocation freezable />
         </LL.LControl>
 
         <LL.LControlLayers>

@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, shallowReactive, shallowReadonly, watchEffect, type PropType, type SlotsType } from 'vue'
 import { useMapContext } from '../hooks/mapContext'
-import { createKeyboardShortcuts } from '../utils/emits'
+import { createKeyboardShortcuts } from '../utils/misc'
 import './LMouseLocation.scss'
 
 type FormatFn = (val: L.LatLng | null, freezed: boolean) => string

@@ -21,35 +21,3 @@ export function defineLifecycleEmits<T>(): LifecycleEmits<T> {
         {} as LifecycleEmits<T>
     )
 }
-
-type KeyboardShortcutsOptions = {
-    stop?: boolean
-    prevent?: boolean
-    [K: string]: boolean | undefined | ((e: KeyboardEvent) => void | false)
-}
-
-export function createKeyboardShortcuts(options: KeyboardShortcutsOptions) {
-    const { prevent, stop } = options
-    return function (this: unknown, e: KeyboardEvent) {
-        const { ctrlKey, shiftKey, altKey, code } = e
-        const key = [
-            ctrlKey ? 'Ctrl' : '',
-            shiftKey ? 'Shift' : '',
-            altKey ? 'Alt' : '',
-            code
-        ].filter(Boolean).join('+')
-
-        const handler = options[key]
-        if (typeof handler === 'function') {
-            const result = handler.call(this, e)
-            if (result !== false) {
-                if (prevent) {
-                    e.preventDefault()
-                }
-                if (stop) {
-                    e.stopPropagation()
-                }
-            }
-        }
-    }
-}

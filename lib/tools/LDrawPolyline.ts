@@ -2,6 +2,7 @@ import { computed, defineComponent, Fragment, h, onBeforeUnmount, reactive, shal
 import { useMapContext } from '../hooks/mapContext'
 import { LPolygon, LPolyline } from '../layers'
 import { validateEmit } from '../utils/emits'
+import { createKeyboardShortcuts } from '../utils/misc'
 import './LDrawPolyline.scss'
 
 type Points = L.LatLng[]
@@ -104,21 +105,16 @@ export const LDrawPolyline = defineComponent({
                 stop(true)
             }
 
-            function handleKeydown(e: KeyboardEvent) {
-                if (e.shiftKey) return
-
-                if (e.ctrlKey) {
-                    if (e.code !== 'KeyZ') return
+            const handleKeydown = createKeyboardShortcuts({
+                stop: true,
+                prevent: true,
+                'Ctrl+KeyZ': () => {
                     state.points.splice(state.points.length - 1)
-                } else if (e.code === 'Escape') {
+                },
+                'Escape': () => {
                     stop()
-                } else {
-                    return
                 }
-
-                e.preventDefault()
-                e.stopPropagation()
-            }
+            })
 
             const eventOptions: EventListenerOptions = { capture: true }
             mapEl.addEventListener('dblclick', handleDblclick, eventOptions)
