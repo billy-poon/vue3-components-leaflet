@@ -42,7 +42,8 @@ export const LControl = defineComponent({
     slots: {} as SlotsType<{
         default?: () => any
     }>,
-    setup(props, { attrs, slots }) {
+    setup(props, context) {
+        const { attrs, slots } = context
         const el = shallowRef<HTMLElement>()
 
         setupControl(
@@ -55,6 +56,7 @@ export const LControl = defineComponent({
                 val.remove?.()
                 return customControl(val, options)
             },
+            context,
             props
         )
 

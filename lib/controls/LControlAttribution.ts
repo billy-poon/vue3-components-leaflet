@@ -5,7 +5,7 @@ import { defineControlProps, setupControl } from '../utils/control'
 export const LControlAttribution = defineComponent({
     name: __component_name__,
     props: defineControlProps<L.Control.AttributionOptions>(),
-    setup(props) {
+    setup(props, context) {
         setupControl(
             (options) => {
                 options = options ?? {}
@@ -15,6 +15,7 @@ export const LControlAttribution = defineComponent({
 
                 return _L.control.attribution(options)
             },
+            context,
             props
         )
 

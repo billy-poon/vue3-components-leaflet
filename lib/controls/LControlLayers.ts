@@ -35,12 +35,14 @@ export const LControlLayers = defineComponent({
     name,
     props: defineControlProps<L.Control.LayersOptions>(),
     slots: {} as SlotsType<LControlLayerSlots>,
-    setup(props, { slots }) {
+    setup(props, context) {
         const { control: ctrl } = setupControl(
             (options) => _L.control.layers({}, {}, options),
+            context,
             props
         )
 
+        const { slots } = context
         return () => {
             const val = ctrl.value
             if (val == null) return;

@@ -1,4 +1,4 @@
-import { watch, type ExtractPropTypes, type PropType } from 'vue'
+import { watch, type ExtractPropTypes, type PropType, type SetupContext } from 'vue'
 import { useMapContext } from '../hooks/mapContext'
 import type { Factory } from '../types'
 import { defineObjectProps, setupObject } from './object'
@@ -17,6 +17,7 @@ export function setupControl<
     P extends LControlProps
 >(
     factory: Factory<T | null, [options: P['options']]>,
+    context: SetupContext<any, any>,
     props: P
 ) {
     const { position: initialPosition } = props
@@ -28,6 +29,10 @@ export function setupControl<
         ),
         props
     )
+
+    context.expose({
+        getControl: () => control.value
+    })
 
     const { map } = useMapContext()
     watchValueEffect((val) => {

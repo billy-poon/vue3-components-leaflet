@@ -26,7 +26,7 @@ export const LMap = defineComponent({
     slots: {} as SlotsType<{
         default?: (map: L.Map) => any
     }>,
-    setup(props, { emit, slots }) {
+    setup(props, { emit, slots, expose }) {
         const {
             zoom: initialZoom,
             center: initialCenter,
@@ -87,6 +87,23 @@ export const LMap = defineComponent({
                 val.setView(center, zoom, options)
             } else if (zoom != null) {
                 val.setZoom(zoom, options)
+            }
+        })
+
+        expose({
+            getMap: () => map.value,
+            setView,
+            getView: () => {
+                const val = map.value
+                if (val == null) {
+                    return null
+                }
+
+                return {
+                    zoom: val.getZoom(),
+                    center: val.getCenter(),
+                    bounds: val.getBounds(),
+                }
             }
         })
 

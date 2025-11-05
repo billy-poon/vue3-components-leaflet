@@ -51,7 +51,7 @@ export function setupLayer<
     context: SetupContext<LLayerEmits<T>, SlotsType<LLayerSlots<T>>>,
     props: P
 ) {
-    const { emit, slots } = context
+    const { emit, slots, expose } = context
 
     const { obj: layer, watchValueEffect, ...rest } = setupObject(
         (options) => {
@@ -74,6 +74,10 @@ export function setupLayer<
         },
         props
     )
+
+    expose({
+        getLayer: () => layer.value
+    })
 
     const { attrs, eventAttrs } = useEventAttrs()
     watchValueEffect((val) => {
